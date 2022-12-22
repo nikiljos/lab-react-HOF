@@ -19,7 +19,7 @@ class HigherOrderFunctions extends Component {
             <ul>
                 {data.map((elt) => {
                     return (
-                        <li className="list-elements">
+                        <li className="list-elements" key={elt.id}>
                             <span>Id: {elt.id}</span>
                             <span>Name : {elt.name}</span>
                             <span>User Type: {elt.user_type}</span>
