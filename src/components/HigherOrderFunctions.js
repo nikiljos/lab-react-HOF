@@ -14,7 +14,8 @@ class HigherOrderFunctions extends Component {
         };
     }
 
-    renderList(data) {
+    ResultList({data}) {
+        console.log(data)
         return (
             <ul>
                 {data.map((elt) => {
@@ -30,63 +31,59 @@ class HigherOrderFunctions extends Component {
         );
     }
 
-    renderFragment(title, data) {
+    ResultFragment({title, children}) {
         return (
             <React.Fragment>
                 <h1>{title}</h1>
-                <div className="display-box">{data}</div>
+                <div className="display-box">{children}</div>
             </React.Fragment>
         );
     }
 
-    filterType(type) {
-        let filterData = this.state.userData.filter((elt) => elt.user_type === type);
-        return this.renderList(filterData);
+    FilterType({data,type}) {
+        let filterData = data.filter((elt) => elt.user_type === type);
+        return <this.ResultList data={filterData}/>;
     }
 
-    filterLetter(letter) {
-        let filterData = this.state.userData.filter((elt) => elt.name[0] === letter);
-        return this.renderList(filterData);
-    }
+    // FilterLetter({letter}) {
+    //     let filterData = this.state.userData.filter((elt) => elt.name[0] === letter);
+    //     return <this.ResultList data={filterData} />;
+    // }
 
-    filterAge() {
-        let filterData = this.state.userData.filter((elt) => {
-            return elt.age>28&&elt.age<=50
-        });
-        return this.renderList(filterData);
-    }
+    // FilterAge() {
+    //     let filterData = this.state.userData.filter((elt) => {
+    //         return elt.age>28&&elt.age<=50
+    //     });
+    //     return <this.ResultList data={filterData}/>;
+    // }
 
-    sumTypeYears(type){
-        return this.state.userData
-            .filter((elt) => elt.user_type === type)
-            .reduce((sum, elt) => {
-                return sum + elt.years;
-            }, 0);
-    }
+    // SumTypeYears({type}){
+    //     return this.state.userData
+    //         .filter((elt) => elt.user_type === type)
+    //         .reduce((sum, elt) => {
+    //             return sum + elt.years;
+    //         }, 0);
+    // }
 
     render() {
+        console.log("sdx",this.state.userData);
         return (
             <div>
-                {this.renderFragment(
-                    "Display all items",
-                    this.renderList(this.state.userData)
-                )}
-                {this.renderFragment(
-                    "Display Based on User Type",
-                    this.filterType("Designer")
-                )}
-                {this.renderFragment(
-                    "Filter All data starting with letter J",
-                    this.filterLetter("J")
-                )}
-                {this.renderFragment(
-                    "Filter all data based on age greater than 28 and age less than or equal to 50",
-                    this.filterAge()
-                )}
-                {this.renderFragment(
-                    "Find the total years of the designers",
-                    this.sumTypeYears("Designer")
-                )}
+                <this.ResultFragment title="Display all items">
+                    <this.ResultList data={this.state.userData} />
+                </this.ResultFragment>
+                {/* <this.ResultFragment title="Display Based on User Type">
+                    <this.FilterType data={this.state.userData} type="Designer" />
+                </this.ResultFragment> */}
+                {/* <this.ResultFragment title="Filter All data starting with letter J">
+                    <this.FilterLetter letter="J" />
+                </this.ResultFragment> */}
+                {/* <this.ResultFragment title="Filter all data based on age greater than 28 and age less than or equal to 50">
+                    <this.FilterAge />
+                </this.ResultFragment> */}
+                {/* <this.ResultFragment title="Find the total years of the designers">
+                    <this.SumTypeYears type="Designer" />
+                </this.ResultFragment> */}
             </div>
         );
     }
